@@ -5,7 +5,9 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Recommendations from './pages/Recommendations';
 import Favorites from './pages/Favorites';
+import Quiz from './pages/Quiz';
 import { ThemeProvider } from './context/ThemeContext';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/recommendations" element={<Recommendations />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/search" element={<Search />} />
               <Route path="/favorites" element={<Favorites />} />
             </Routes>
           </main>

@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { fetchBooksBasedOnQuiz } from '../utils/fetchBooks';
+import React, { useState, useEffect } from 'react';
+import { fetchBooksByQuery } from '../utils/fetchBooks';
 
-function Recommendations() {
-    const location = useLocation();
+function Search() {
+    const [query, setQuery] = useState('');
     const [books, setBooks] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
-        const answers = location.state?.answers || [];
-
-        const fetchBooks = async () => {
-            const fetchedBooks = await fetchBooksBasedOnQuiz(answers);
-            setBooks(fetchedBooks);
-        };
-
-        if (answers.length) {
-            fetchBooks();
-        }
-
         // load favorites from localStorage
         const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
         setFavorites(savedFavorites);
-    }, [location.state]);
+    }, []);
 
-    // toggle favorite function
+    const handleSearch = async () => {
+        if (query.trim() === '') return;
+
+        setLoading(true);
+        const results = await fetchBooksByQuery(query);
+        setBooks(results);
+        setLoading(false);
+    };
+
     const toggleFavorite = (book) => {
         let updatedFavorites;
         if (favorites.some((fav) => fav.id === book.id)) {
@@ -39,10 +36,30 @@ function Recommendations() {
 
     return (
         <div className="min-h-screen bg-matcha-light dark:bg-night-library text-matcha-dark dark:text-night-text p-6">
-            <h2 className="text-3xl font-bold mb-4">Your Personalized MatchaBook Blend</h2>
-            <p className="mb-6">Based on your quiz answers, here’s what we recommend:</p>
+            <h2 className="text-3xl font-bold mb-4">Search for Books</h2>
+            <div className="flex space-x-2 mb-6">
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search by title, author, genre..."
+                    className="flex-grow p-2 rounded border dark:bg-night-library-light dark:text-night-text"
+                />
+                <button
+                    onClick={handleSearch}
+                    className="bg-matcha-dark dark:bg-night-library-light text-white px-4 py-2 rounded shadow hover:bg-matcha-light hover:text-matcha-dark"
+                >
+                    Search
+                </button>
+            </div>
 
-            {books.length > 0 ? (
+            {loading && (
+                <div className="flex justify-center items-center">
+                    <div className="w-16 h-16 border-4 border-matcha-dark border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            )}
+
+            {!loading && books.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {books.map((book) => (
                         <div key={book.id} className="bg-white dark:bg-night-library-light p-4 rounded-lg shadow-md relative">
@@ -53,7 +70,7 @@ function Recommendations() {
                             />
                             <h3 className="font-bold">{book.volumeInfo.title}</h3>
                             <p className="text-sm">{book.volumeInfo.authors?.join(', ')}</p>
-                            
+
                             {/* favorite button */}
                             <button
                                 onClick={() => toggleFavorite(book)}
@@ -66,11 +83,13 @@ function Recommendations() {
                         </div>
                     ))}
                 </div>
-            ) : (
-                <p>No books found...maybe the matcha spirits are sleeping.</p>
+            )}
+
+            {!loading && query && books.length === 0 && (
+                <p>No books found for "{query}". Try something else?</p>
             )}
         </div>
     );
 }
 
-export default Recommendations;
+export default Search;
