@@ -41,7 +41,7 @@ function Favorites() {
                     ))}
                 </div>
             ) : (
-                <p>No favorite books yet. Go add some from the search or recommendations page! 🍵</p>
+                <p>No favorite books yet. Go add some from the search or recommendations page!</p>
             )}
         </div>
     );
