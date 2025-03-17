@@ -19,21 +19,6 @@ function Home() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Floating Cubes Background */}
-      <div className="floating-bg absolute inset-0 -z-20">
-        <ul className="floating-cubes">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-screen text-center p-4">

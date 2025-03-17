@@ -37,24 +37,23 @@ function Quiz() {
     const { question, options } = questions[currentQuestion];
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-matcha-light dark:bg-night-library text-matcha-dark dark:text-night-text p-6">
-            <h2 className="text-3xl font-bold mb-4">Your MatchaBook Pairing Quiz</h2>
-            <p className="text-lg mb-6">{question}</p>
-            <div className="grid grid-cols-2 gap-4 max-w-lg">
-                {options.map((option) => (
-                    <button
-                        key={option}
-                        onClick={() => handleAnswerClick(option)}
-                        className="bg-matcha-dark dark:bg-night-library text-white py-2 px-4 rounded-lg shadow-md hover:bg-matcha-light 
-                                 hover:text-matcha-dark border border-matcha-dark"
-                        // className="py-2 px-4 bg-matcha-dark dark:bg-night-library-light text-white rounded-lg shadow-md hover:shadow-lg transition-all"
-                    >
-                        {option}
-                    </button>
-                ))}
-            </div>
+        <div className="min-h-screen flex flex-col items-center justify-center text-matcha-dark dark:text-night-text p-6">
+          <h2 className="text-3xl font-bold mb-4">Your MatchaBook Pairing Quiz</h2>
+          <p className="text-lg mb-6">{question}</p>
+          <div className="grid grid-cols-2 gap-4 max-w-lg">
+            {options.map((option) => (
+              <button
+                key={option}
+                onClick={() => handleAnswerClick(option)}
+                className="bg-matcha-dark dark:bg-night-library text-white py-2 px-4 rounded-lg shadow-md hover:bg-matcha-light 
+                           hover:text-matcha-dark border border-matcha-dark"
+              >
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
-    );
+      );      
 }
 
 export default Quiz;
