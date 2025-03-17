@@ -13,7 +13,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen flex flex-col justify-between bg-matcha-light dark:bg-night-library text-matcha-dark dark:text-night-text">
+        <div className="min-h-screen flex flex-col justify-between text-matcha-dark dark:text-night-text">
           <Navbar />
           <main className="flex-grow">
             <Routes>
