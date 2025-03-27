@@ -55,19 +55,35 @@ function Recommendations() {
             ) : books.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {books.map((book) => (
-                        <div key={book.id} className="bg-white dark:bg-night-library-light p-4 rounded-lg shadow-md relative">
+                        <div
+                            key={book.id}
+                            className="bg-matcha-dark dark:bg-night-library-light p-6 rounded-2xl shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl duration-300 relative text-white"
+                        >
                             <img
-                                src={book.volumeInfo.imageLinks?.thumbnail || '/images/book-placeholder.png'}
+                                src={
+                                    book.volumeInfo.imageLinks?.extraLarge ||
+                                    book.volumeInfo.imageLinks?.large ||
+                                    book.volumeInfo.imageLinks?.medium ||
+                                    book.volumeInfo.imageLinks?.small ||
+                                    book.volumeInfo.imageLinks?.thumbnail ||
+                                    '/images/book-placeholder.png'
+                                }
                                 alt={book.volumeInfo.title}
-                                className="w-full h-60 object-cover rounded-md mb-2"
+                                className="w-full h-64 object-cover rounded-xl mb-4"
                             />
-                            <h3 className="font-bold">{book.volumeInfo.title}</h3>
-                            <p className="text-sm">{book.volumeInfo.authors?.join(', ')}</p>
-                            
+                            <h3 className="font-bold text-lg text-white dark:text-night-text mb-1">
+                                {book.volumeInfo.title}
+                            </h3>
+                            <p className="text-sm text-gray-200 dark:text-gray-300 mb-2">
+                                {book.volumeInfo.authors?.join(', ')}
+                            </p>
+
                             <button
                                 onClick={() => toggleFavorite(book)}
-                                className={`absolute top-2 right-2 p-2 rounded-full ${
-                                    favorites.some((fav) => fav.id === book.id) ? "bg-red-500 text-white" : "bg-gray-300 text-gray-700"
+                                className={`absolute top-3 right-3 p-2 rounded-full shadow-md ${
+                                    favorites.some((fav) => fav.id === book.id)
+                                        ? "bg-red-500 text-white"
+                                        : "bg-gray-200 text-gray-700"
                                 }`}
                             >
                                 ❤️
