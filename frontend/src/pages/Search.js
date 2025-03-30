@@ -22,6 +22,12 @@ function Search() {
         setLoading(false);
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          handleSearch();
+        }
+      };
+    
     const toggleFavorite = (book) => {
         let updatedFavorites;
         if (favorites.some((fav) => fav.id === book.id)) {
@@ -42,6 +48,7 @@ function Search() {
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     placeholder="Search by title, author, genre..."
                     className="flex-grow p-2 rounded border dark:bg-night-library-light dark:text-night-text"
                 />
@@ -71,7 +78,6 @@ function Search() {
                             <h3 className="font-bold">{book.volumeInfo.title}</h3>
                             <p className="text-sm">{book.volumeInfo.authors?.join(', ')}</p>
 
-                            {/* favorite button */}
                             <button
                                 onClick={() => toggleFavorite(book)}
                                 className={`absolute top-2 right-2 p-2 rounded-full ${
